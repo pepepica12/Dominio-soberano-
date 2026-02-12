@@ -16,6 +16,26 @@
       "id": "did:alma:db",
       "type": "DatabaseService",
       "serviceEndpoint": "https://console.neon.tech"
+    },
+    {
+      "id": "did:alma:auth",
+      "type": "AuthService",
+      "serviceEndpoint": "https://auth.alma"
+    },
+    {
+      "id": "did:alma:cdn",
+      "type": "CDNService",
+      "serviceEndpoint": "https://cdn.alma"
+    },
+    {
+      "id": "did:alma:dashboard",
+      "type": "DashboardService",
+      "serviceEndpoint": "https://dashboard.alma"
+    },
+    {
+      "id": "did:alma:ai",
+      "type": "AIService",
+      "serviceEndpoint": "https://ai.alma"
     }
   ]
 }
