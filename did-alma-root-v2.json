@@ -1,0 +1,57 @@
+{
+  "@context": [
+    "https://www.w3.org/ns/did/v1"
+  ],
+  "id": "did:alma:root",
+  "verificationMethod": [
+    {
+      "id": "did:alma:root#keys-1",
+      "type": "Ed25519VerificationKey2020",
+      "controller": "did:alma:root",
+      "publicKeyPem": "MCowBQYDK2VwAyEAjWmy6NIqF/zpED84uoKyFImSBb3BtLaH8PPyvj2btdQ="
+    }
+  ],
+  "authentication": [
+    "did:alma:root#keys-1"
+  ],
+  "assertionMethod": [
+    "did:alma:root#keys-1"
+  ],
+  "service": [
+    {
+      "id": "did:alma:frontend",
+      "type": "FrontendService",
+      "serviceEndpoint": "https://nexus-brain.pages.dev"
+    },
+    {
+      "id": "did:alma:backend",
+      "type": "BackendService",
+      "serviceEndpoint": "https://cerebro-nexo-bankend.onrender.com"
+    },
+    {
+      "id": "did:alma:db",
+      "type": "DatabaseService",
+      "serviceEndpoint": "https://console.neon.tech"
+    },
+    {
+      "id": "did:alma:auth",
+      "type": "AuthService",
+      "serviceEndpoint": "https://auth.alma"
+    },
+    {
+      "id": "did:alma:cdn",
+      "type": "CDNService",
+      "serviceEndpoint": "https://cdn.alma"
+    },
+    {
+      "id": "did:alma:dashboard",
+      "type": "DashboardService",
+      "serviceEndpoint": "https://dashboard.alma"
+    },
+    {
+      "id": "did:alma:ai",
+      "type": "AIService",
+      "serviceEndpoint": "https://ai.alma"
+    }
+  ]
+}
