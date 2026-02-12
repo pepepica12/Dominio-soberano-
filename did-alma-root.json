@@ -1,0 +1,21 @@
+{
+  "@context": "https://www.w3.org/ns/did/v1",
+  "id": "did:alma:root",
+  "service": [
+    {
+      "id": "did:alma:frontend",
+      "type": "FrontendService",
+      "serviceEndpoint": "https://nexus-brain.pages.dev"
+    },
+    {
+      "id": "did:alma:backend",
+      "type": "BackendService",
+      "serviceEndpoint": "https://cerebro-nexo-bankend.onrender.com"
+    },
+    {
+      "id": "did:alma:db",
+      "type": "DatabaseService",
+      "serviceEndpoint": "https://console.neon.tech"
+    }
+  ]
+}
