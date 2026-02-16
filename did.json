@@ -5,7 +5,7 @@
     {
       "id": "#backend",
       "type": "BackendService",
-      "serviceEndpoint": "https://tu-backend.onrender.com"
+      "serviceEndpoint": "https://cerebro-nexo-bankend.onrender.com/"
     },
     {
       "id": "#cdn",
@@ -14,3 +14,5 @@
     }
   ]
 }
+
+
