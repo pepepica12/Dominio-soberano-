@@ -1,0 +1,16 @@
+{
+  "id": "did:alma:root",
+  "controller": "did:alma:root",
+  "service": [
+    {
+      "id": "#backend",
+      "type": "BackendService",
+      "serviceEndpoint": "https://tu-backend.onrender.com"
+    },
+    {
+      "id": "#cdn",
+      "type": "AssetService",
+      "serviceEndpoint": "https://pepepica12.github.io/Dominio-soberano-/assets/"
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dominio Soberano</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <h1>Dominio Soberano</h1>
+  <p>UI pública desplegada desde GitHub Pages.</p>
+
+  <div id="config"></div>
+  <div id="did"></div>
+
+  <script>
+    async function loadConfig() {
+      const res = await fetch("./config.json");
+      const data = await res.json();
+      document.getElementById("config").innerHTML =
+        "<h2>Config:</h2><pre>" + JSON.stringify(data, null, 2) + "</pre>";
+    }
+
+    async function loadDID() {
+      const res = await fetch("./did.json");
+      const data = await res.json();
+      document.getElementById("did").innerHTML =
+        "<h2>DID:</h2><pre>" + JSON.stringify(data, null, 2) + "</pre>";
+    }
+
+    loadConfig();
+    loadDID();
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,7 @@
+{
+  "version": "1.0.0",
+  "name": "Dominio Soberano",
+  "backend": "https://tu-backend.onrender.com",
+  "cdn": "https://pepepica12.github.io/Dominio-soberano-/assets/",
+  "did": "https://pepepica12.github.io/Dominio-soberano-/did.json"
+}
