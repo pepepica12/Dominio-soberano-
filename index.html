@@ -13,6 +13,7 @@
 
   <div id="config"></div>
   <div id="did"></div>
+  <div id="backend"></div>
 
   <script>
     async function loadConfig() {
@@ -22,7 +23,8 @@
         document.getElementById("config").innerHTML =
           "<h2>Config:</h2><pre>" + JSON.stringify(data, null, 2) + "</pre>";
       } catch (e) {
-        document.getElementById("config").innerHTML = "<p>Error cargando config.json</p>";
+        document.getElementById("config").innerHTML =
+          "<p>Error cargando config.json</p>";
       }
     }
 
@@ -33,12 +35,30 @@
         document.getElementById("did").innerHTML =
           "<h2>DID:</h2><pre>" + JSON.stringify(data, null, 2) + "</pre>";
       } catch (e) {
-        document.getElementById("did").innerHTML = "<p>Error cargando did.json</p>";
+        document.getElementById("did").innerHTML =
+          "<p>Error cargando did.json</p>";
+      }
+    }
+
+    async function testBackend() {
+      try {
+        const config = await fetch("./config.json").then(r => r.json());
+        const backend = config.backend;
+
+        const res = await fetch(backend + "api/ejemplo");
+        const data = await res.json();
+
+        document.getElementById("backend").innerHTML =
+          "<h2>Backend:</h2><pre>" + JSON.stringify(data, null, 2) + "</pre>";
+      } catch (e) {
+        document.getElementById("backend").innerHTML =
+          "<p>Error conectando al backend.</p>";
       }
     }
 
     loadConfig();
     loadDID();
+    testBackend();
   </script>
 
 </body>
