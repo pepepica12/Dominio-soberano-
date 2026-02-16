@@ -16,17 +16,25 @@
 
   <script>
     async function loadConfig() {
-      const res = await fetch("./config.json");
-      const data = await res.json();
-      document.getElementById("config").innerHTML =
-        "<h2>Config:</h2><pre>" + JSON.stringify(data, null, 2) + "</pre>";
+      try {
+        const res = await fetch("./config.json");
+        const data = await res.json();
+        document.getElementById("config").innerHTML =
+          "<h2>Config:</h2><pre>" + JSON.stringify(data, null, 2) + "</pre>";
+      } catch (e) {
+        document.getElementById("config").innerHTML = "<p>Error cargando config.json</p>";
+      }
     }
 
     async function loadDID() {
-      const res = await fetch("./did.json");
-      const data = await res.json();
-      document.getElementById("did").innerHTML =
-        "<h2>DID:</h2><pre>" + JSON.stringify(data, null, 2) + "</pre>";
+      try {
+        const res = await fetch("./did.json");
+        const data = await res.json();
+        document.getElementById("did").innerHTML =
+          "<h2>DID:</h2><pre>" + JSON.stringify(data, null, 2) + "</pre>";
+      } catch (e) {
+        document.getElementById("did").innerHTML = "<p>Error cargando did.json</p>";
+      }
     }
 
     loadConfig();
