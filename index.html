@@ -1,42 +1,62 @@
-<script>
-  async function loadConfig() {
-    try {
-      const res = await fetch("https://pepepica12.github.io/alma_did/config.json");
-      const data = await res.json();
-      document.getElementById("config").innerHTML =
-        "<h2>Config:</h2><pre>" + JSON.stringify(data, null, 2) + "</pre>";
-    } catch (e) {
-      document.getElementById("config").innerHTML =
-        "<p>Error cargando config.json</p>";
-    }
-  }
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dominio Soberano</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
 
-  async function loadDID() {
-    try {
-      const res = await fetch("https://pepepica12.github.io/alma_did/did.json");
-      const data = await res.json();
-      document.getElementById("did").innerHTML =
-        "<h2>DID:</h2><pre>" + JSON.stringify(data, null, 2) + "</pre>";
-    } catch (e) {
-      document.getElementById("did").innerHTML =
-        "<p>Error cargando did.json</p>";
-    }
-  }
+  <h1>Dominio Soberano</h1>
+  <p>UI pública desplegada desde GitHub Pages.</p>
 
-  async function loadBackend() {
-    try {
-      const res = await fetch("https://cerebro-nexo-bankend.onrender.com/");
-      const data = await res.json();
-      document.getElementById("backend").innerHTML =
-        "<h2>Backend:</h2><pre>" + JSON.stringify(data, null, 2) + "</pre>";
-    } catch (e) {
-      document.getElementById("backend").innerHTML =
-        "<p>Error conectando al backend</p>";
-    }
-  }
+  <div id="config"></div>
+  <div id="did"></div>
+  <div id="backend"></div>
 
-  // Ejecutar las funciones al cargar la página
-  loadConfig();
-  loadDID();
-  loadBackend();
-</script>
+  <script>
+    async function loadConfig() {
+      try {
+        const res = await fetch("https://pepepica12.github.io/alma_did/config.json");
+        const data = await res.json();
+        document.getElementById("config").innerHTML =
+          "<h2>Config:</h2><pre>" + JSON.stringify(data, null, 2) + "</pre>";
+      } catch (e) {
+        document.getElementById("config").innerHTML =
+          "<p>Error cargando config.json</p>";
+      }
+    }
+
+    async function loadDID() {
+      try {
+        const res = await fetch("https://pepepica12.github.io/alma_did/did.json");
+        const data = await res.json();
+        document.getElementById("did").innerHTML =
+          "<h2>DID:</h2><pre>" + JSON.stringify(data, null, 2) + "</pre>";
+      } catch (e) {
+        document.getElementById("did").innerHTML =
+          "<p>Error cargando did.json</p>";
+      }
+    }
+
+    async function loadBackend() {
+      try {
+        const res = await fetch("https://cerebro-nexo-bankend.onrender.com/");
+        const data = await res.json();
+        document.getElementById("backend").innerHTML =
+          "<h2>Backend:</h2><pre>" + JSON.stringify(data, null, 2) + "</pre>";
+      } catch (e) {
+        document.getElementById("backend").innerHTML =
+          "<p>Error conectando al backend</p>";
+      }
+    }
+
+    // Ejecutar las funciones al cargar la página
+    loadConfig();
+    loadDID();
+    loadBackend();
+  </script>
+
+</body>
+</html>
