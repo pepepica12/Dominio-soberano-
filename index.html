@@ -9,36 +9,30 @@
       menu.style.marginBottom = "2rem";
 
       const sections = {
-        "Estudiantes": "#backend-render",
-        "Hogar": "#railway-telemetria",
-        "Negocios": "#frontend-vercel",
-        "Comunidad": "#frontend-github"
+        "Estudiantes": { id: "#backend-render", class: "estudiantes" },
+        "Hogar": { id: "#railway-telemetria", class: "hogar" },
+        "Negocios": { id: "#frontend-vercel", class: "negocios" },
+        "Comunidad": { id: "#frontend-github", class: "comunidad" }
       };
 
-      for (const [label, id] of Object.entries(sections)) {
+      for (const [label, info] of Object.entries(sections)) {
         const btn = document.createElement("button");
         btn.textContent = label;
-        btn.style.marginRight = "1rem";
-        btn.style.padding = "0.5rem 1rem";
-        btn.style.background = "#444";
-        btn.style.color = "white";
-        btn.style.border = "none";
-        btn.style.borderRadius = "4px";
-        btn.style.cursor = "pointer";
+        btn.className = info.class;
 
         btn.onclick = async () => {
-          const service = services.find(s => s.id === id);
+          const service = services.find(s => s.id === info.id);
           if (service) {
             try {
               const res = await fetch(service.serviceEndpoint);
+              if (!res.ok) throw new Error("Servicio no disponible");
               const data = await res.json();
               document.getElementById("did").innerHTML =
                 "<h2>" + label + "</h2><pre>" +
                 JSON.stringify(data, null, 2) + "</pre>";
             } catch (e) {
               document.getElementById("did").innerHTML =
-                "<h2>" + label + "</h2><p>Error conectando a " +
-                service.serviceEndpoint + "</p>";
+                "<h2>" + label + "</h2><p>El servicio está iniciando o no responde. Intenta de nuevo en unos segundos.</p>";
             }
           } else {
             document.getElementById("did").innerHTML =
@@ -49,12 +43,28 @@
         menu.appendChild(btn);
       }
 
-      document.body.insertBefore(menu, document.getElementById("config"));
+      document.body.insertBefore(menu, document.getElementById("did"));
     } catch (e) {
       document.getElementById("did").innerHTML =
         "<p>Error cargando did.json</p>";
     }
   }
 
+  // Ejecutar solo DID y Backend (sin config.json)
   loadDID();
+
+  async function loadBackend() {
+    try {
+      const res = await fetch("https://cerebro-nexo-bankend.onrender.com/");
+      if (!res.ok) throw new Error("Backend no disponible");
+      const data = await res.json();
+      document.getElementById("backend").innerHTML =
+        "<h2>Backend:</h2><pre>" + JSON.stringify(data, null, 2) + "</pre>";
+    } catch (e) {
+      document.getElementById("backend").innerHTML =
+        "<p>El backend está iniciando o no responde. Intenta de nuevo en unos segundos.</p>";
+    }
+  }
+
+  loadBackend();
 </script>
