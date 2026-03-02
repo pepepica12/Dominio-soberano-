@@ -11,6 +11,10 @@
   <h1>Dominio Soberano</h1>
   <p>UI pública desplegada desde GitHub Pages.</p>
 
+  <!-- Menú dinámico -->
+  <div id="menu"></div>
+
+  <!-- Contenido dinámico -->
   <div id="did"></div>
   <div id="backend"></div>
 
@@ -59,7 +63,7 @@
           menu.appendChild(btn);
         }
 
-        document.body.insertBefore(menu, document.getElementById("did"));
+        document.getElementById("menu").appendChild(menu);
       } catch (e) {
         document.getElementById("did").innerHTML =
           "<p>Error cargando did.json</p>";
