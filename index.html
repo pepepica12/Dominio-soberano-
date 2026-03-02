@@ -1,65 +1,28 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dominio Soberano</title>
-  <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-
-  <h1>Dominio Soberano</h1>
-  <p>UI pública desplegada desde GitHub Pages.</p>
-
-  <div id="config"></div>
-  <div id="did"></div>
-  <div id="backend"></div>
-
-  <script>
-    async function loadConfig() {
-      try {
-        const res = await fetch("./config.json");
-        const data = await res.json();
-        document.getElementById("config").innerHTML =
-          "<h2>Config:</h2><pre>" + JSON.stringify(data, null, 2) + "</pre>";
-      } catch (e) {
-        document.getElementById("config").innerHTML =
-          "<p>Error cargando config.json</p>";
-      }
+<script>
+  async function loadConfig() {
+    try {
+      const res = await fetch("https://pepepica12.github.io/alma_did/config.json");
+      const data = await res.json();
+      document.getElementById("config").innerHTML =
+        "<h2>Config:</h2><pre>" + JSON.stringify(data, null, 2) + "</pre>";
+    } catch (e) {
+      document.getElementById("config").innerHTML =
+        "<p>Error cargando config.json</p>";
     }
+  }
 
-    async function loadDID() {
-      try {
-        const res = await fetch("./did.json");
-        const data = await res.json();
-        document.getElementById("did").innerHTML =
-          "<h2>DID:</h2><pre>" + JSON.stringify(data, null, 2) + "</pre>";
-      } catch (e) {
-        document.getElementById("did").innerHTML =
-          "<p>Error cargando did.json</p>";
-      }
+  async function loadDID() {
+    try {
+      const res = await fetch("https://pepepica12.github.io/alma_did/did.json");
+      const data = await res.json();
+      document.getElementById("did").innerHTML =
+        "<h2>DID:</h2><pre>" + JSON.stringify(data, null, 2) + "</pre>";
+    } catch (e) {
+      document.getElementById("did").innerHTML =
+        "<p>Error cargando did.json</p>";
     }
+  }
 
-    async function testBackend() {
-      try {
-        const config = await fetch("./config.json").then(r => r.json());
-        const backend = config.backend;
-
-        const res = await fetch(backend + "api/ejemplo");
-        const data = await res.json();
-
-        document.getElementById("backend").innerHTML =
-          "<h2>Backend:</h2><pre>" + JSON.stringify(data, null, 2) + "</pre>";
-      } catch (e) {
-        document.getElementById("backend").innerHTML =
-          "<p>Error conectando al backend.</p>";
-      }
-    }
-
-    loadConfig();
-    loadDID();
-    testBackend();
-  </script>
-
-</body>
-</html>
+  loadConfig();
+  loadDID();
+</script>
