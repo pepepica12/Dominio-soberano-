@@ -23,6 +23,20 @@
     }
   }
 
+  async function loadBackend() {
+    try {
+      const res = await fetch("https://cerebro-nexo-bankend.onrender.com/");
+      const data = await res.json();
+      document.getElementById("backend").innerHTML =
+        "<h2>Backend:</h2><pre>" + JSON.stringify(data, null, 2) + "</pre>";
+    } catch (e) {
+      document.getElementById("backend").innerHTML =
+        "<p>Error conectando al backend</p>";
+    }
+  }
+
+  // Ejecutar las funciones al cargar la página
   loadConfig();
   loadDID();
+  loadBackend();
 </script>
