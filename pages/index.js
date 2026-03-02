@@ -5,32 +5,30 @@ export default function Home() {
   const [responses, setResponses] = useState({});
 
   useEffect(() => {
-    // Cargar DID desde GitHub Pages
     fetch("https://pepepica12.github.io/alma_did/did.json")
       .then(res => res.json())
       .then(data => {
         setServices(data.service);
 
-        // Conectar automáticamente a todos los servicios declarados en el DID
+        // Conectar automáticamente a cada servicio
         data.service.forEach(s => {
-          // Ejemplo: si es backend, intenta consumir un endpoint
           if (s.type === "BackendService") {
-            fetch(s.serviceEndpoint + "/api/ejemplo") // Ajusta la ruta real de tu backend
+            fetch(s.serviceEndpoint + "/api/ejemplo") // Ajusta la ruta real
               .then(res => res.json())
-              .then(apiData => {
-                setResponses(prev => ({ ...prev, [s.id]: apiData }));
-              })
-              .catch(err => console.error("Error conectando a", s.id, err));
+              .then(apiData => setResponses(prev => ({ ...prev, [s.id]: apiData })))
+              .catch(err => console.error("Error en", s.id, err));
           }
 
-          // Ejemplo: si es TelemetryService, intenta consumir datos
           if (s.type === "TelemetryService") {
-            fetch(s.serviceEndpoint + "/metrics") // Ajusta la ruta real de tu telemetría
+            fetch(s.serviceEndpoint + "/metrics") // Ajusta la ruta real
               .then(res => res.json())
-              .then(metrics => {
-                setResponses(prev => ({ ...prev, [s.id]: metrics }));
-              })
-              .catch(err => console.error("Error conectando a", s.id, err));
+              .then(metrics => setResponses(prev => ({ ...prev, [s.id]: metrics })))
+              .catch(err => console.error("Error en", s.id, err));
+          }
+
+          if (s.type === "FrontendService") {
+            // No se consume, se enlaza
+            setResponses(prev => ({ ...prev, [s.id]: "Frontend enlazado" }));
           }
         });
       })
@@ -39,9 +37,7 @@ export default function Home() {
 
   return (
     <div style={{ fontFamily: "sans-serif", padding: "2rem" }}>
-      <h1>Plataforma Soberana: did:alma:root</h1>
-
-      <h2>Servicios conectados:</h2>
+      <h1>Plataforma Soberana Multifuncional</h1>
       <ul>
         {services.map(s => (
           <li key={s.id}>
