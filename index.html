@@ -1,62 +1,60 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dominio Soberano</title>
-  <link rel="stylesheet" href="styles.css">
-</head>
-<body>
+<script>
+  async function loadDID() {
+    try {
+      const res = await fetch("https://pepepica12.github.io/alma_did/did.json");
+      const data = await res.json();
+      const services = data.service;
 
-  <h1>Dominio Soberano</h1>
-  <p>UI pública desplegada desde GitHub Pages.</p>
+      const menu = document.createElement("nav");
+      menu.style.marginBottom = "2rem";
 
-  <div id="config"></div>
-  <div id="did"></div>
-  <div id="backend"></div>
+      const sections = {
+        "Estudiantes": "#backend-render",
+        "Hogar": "#railway-telemetria",
+        "Negocios": "#frontend-vercel",
+        "Comunidad": "#frontend-github"
+      };
 
-  <script>
-    async function loadConfig() {
-      try {
-        const res = await fetch("https://pepepica12.github.io/alma_did/config.json");
-        const data = await res.json();
-        document.getElementById("config").innerHTML =
-          "<h2>Config:</h2><pre>" + JSON.stringify(data, null, 2) + "</pre>";
-      } catch (e) {
-        document.getElementById("config").innerHTML =
-          "<p>Error cargando config.json</p>";
+      for (const [label, id] of Object.entries(sections)) {
+        const btn = document.createElement("button");
+        btn.textContent = label;
+        btn.style.marginRight = "1rem";
+        btn.style.padding = "0.5rem 1rem";
+        btn.style.background = "#444";
+        btn.style.color = "white";
+        btn.style.border = "none";
+        btn.style.borderRadius = "4px";
+        btn.style.cursor = "pointer";
+
+        btn.onclick = async () => {
+          const service = services.find(s => s.id === id);
+          if (service) {
+            try {
+              const res = await fetch(service.serviceEndpoint);
+              const data = await res.json();
+              document.getElementById("did").innerHTML =
+                "<h2>" + label + "</h2><pre>" +
+                JSON.stringify(data, null, 2) + "</pre>";
+            } catch (e) {
+              document.getElementById("did").innerHTML =
+                "<h2>" + label + "</h2><p>Error conectando a " +
+                service.serviceEndpoint + "</p>";
+            }
+          } else {
+            document.getElementById("did").innerHTML =
+              "<p>Servicio no encontrado en DID</p>";
+          }
+        };
+
+        menu.appendChild(btn);
       }
+
+      document.body.insertBefore(menu, document.getElementById("config"));
+    } catch (e) {
+      document.getElementById("did").innerHTML =
+        "<p>Error cargando did.json</p>";
     }
+  }
 
-    async function loadDID() {
-      try {
-        const res = await fetch("https://pepepica12.github.io/alma_did/did.json");
-        const data = await res.json();
-        document.getElementById("did").innerHTML =
-          "<h2>DID:</h2><pre>" + JSON.stringify(data, null, 2) + "</pre>";
-      } catch (e) {
-        document.getElementById("did").innerHTML =
-          "<p>Error cargando did.json</p>";
-      }
-    }
-
-    async function loadBackend() {
-      try {
-        const res = await fetch("https://cerebro-nexo-bankend.onrender.com/");
-        const data = await res.json();
-        document.getElementById("backend").innerHTML =
-          "<h2>Backend:</h2><pre>" + JSON.stringify(data, null, 2) + "</pre>";
-      } catch (e) {
-        document.getElementById("backend").innerHTML =
-          "<p>Error conectando al backend</p>";
-      }
-    }
-
-    // Ejecutar las funciones al cargar la página
-    loadConfig();
-    loadDID();
-    loadBackend();
-  </script>
-
-</body>
-</html>
+  loadDID();
+</script>
