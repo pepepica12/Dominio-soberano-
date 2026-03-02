@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 
 export default function Home() {
   const [services, setServices] = useState([]);
+  const [activeService, setActiveService] = useState(null);
   const [responses, setResponses] = useState({});
 
   useEffect(() => {
@@ -27,7 +28,6 @@ export default function Home() {
           }
 
           if (s.type === "FrontendService") {
-            // No se consume, se enlaza
             setResponses(prev => ({ ...prev, [s.id]: "Frontend enlazado" }));
           }
         });
@@ -38,21 +38,43 @@ export default function Home() {
   return (
     <div style={{ fontFamily: "sans-serif", padding: "2rem" }}>
       <h1>Plataforma Soberana Multifuncional</h1>
-      <ul>
+
+      {/* Menú dinámico */}
+      <nav style={{ marginBottom: "2rem" }}>
         {services.map(s => (
-          <li key={s.id}>
-            <strong>{s.id}</strong> →{" "}
-            <a href={s.serviceEndpoint} target="_blank" rel="noopener noreferrer">
-              {s.serviceEndpoint}
-            </a>
+          <button
+            key={s.id}
+            style={{
+              marginRight: "1rem",
+              padding: "0.5rem 1rem",
+              background: activeService === s.id ? "#444" : "#888",
+              color: "white",
+              border: "none",
+              borderRadius: "4px",
+              cursor: "pointer"
+            }}
+            onClick={() => setActiveService(s.id)}
+          >
+            {s.id.replace("#", "").toUpperCase()}
+          </button>
+        ))}
+      </nav>
+
+      {/* Contenido dinámico */}
+      <div>
+        {activeService ? (
+          <div>
+            <h2>Servicio activo: {activeService}</h2>
             <pre>
-              {responses[s.id]
-                ? JSON.stringify(responses[s.id], null, 2)
+              {responses[activeService]
+                ? JSON.stringify(responses[activeService], null, 2)
                 : "Esperando datos..."}
             </pre>
-          </li>
-        ))}
-      </ul>
+          </div>
+        ) : (
+          <p>Selecciona un servicio del menú para comenzar.</p>
+        )}
+      </div>
     </div>
   );
 }
