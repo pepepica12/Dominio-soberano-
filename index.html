@@ -1,70 +1,88 @@
-<script>
-  async function loadDID() {
-    try {
-      const res = await fetch("https://pepepica12.github.io/alma_did/did.json");
-      const data = await res.json();
-      const services = data.service;
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dominio Soberano</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
 
-      const menu = document.createElement("nav");
-      menu.style.marginBottom = "2rem";
+  <h1>Dominio Soberano</h1>
+  <p>UI pública desplegada desde GitHub Pages.</p>
 
-      const sections = {
-        "Estudiantes": { id: "#backend-render", class: "estudiantes" },
-        "Hogar": { id: "#railway-telemetria", class: "hogar" },
-        "Negocios": { id: "#frontend-vercel", class: "negocios" },
-        "Comunidad": { id: "#frontend-github", class: "comunidad" }
-      };
+  <div id="did"></div>
+  <div id="backend"></div>
 
-      for (const [label, info] of Object.entries(sections)) {
-        const btn = document.createElement("button");
-        btn.textContent = label;
-        btn.className = info.class;
+  <script>
+    async function loadDID() {
+      try {
+        const res = await fetch("https://pepepica12.github.io/alma_did/did.json");
+        const data = await res.json();
+        const services = data.service;
 
-        btn.onclick = async () => {
-          const service = services.find(s => s.id === info.id);
-          if (service) {
-            try {
-              const res = await fetch(service.serviceEndpoint);
-              if (!res.ok) throw new Error("Servicio no disponible");
-              const data = await res.json();
-              document.getElementById("did").innerHTML =
-                "<h2>" + label + "</h2><pre>" +
-                JSON.stringify(data, null, 2) + "</pre>";
-            } catch (e) {
-              document.getElementById("did").innerHTML =
-                "<h2>" + label + "</h2><p>El servicio está iniciando o no responde. Intenta de nuevo en unos segundos.</p>";
-            }
-          } else {
-            document.getElementById("did").innerHTML =
-              "<p>Servicio no encontrado en DID</p>";
-          }
+        const menu = document.createElement("nav");
+        menu.style.marginBottom = "2rem";
+
+        const sections = {
+          "Estudiantes": { id: "#backend-render", class: "estudiantes" },
+          "Hogar": { id: "#railway-telemetria", class: "hogar" },
+          "Negocios": { id: "#frontend-vercel", class: "negocios" },
+          "Comunidad": { id: "#frontend-github", class: "comunidad" }
         };
 
-        menu.appendChild(btn);
+        for (const [label, info] of Object.entries(sections)) {
+          const btn = document.createElement("button");
+          btn.textContent = label;
+          btn.className = info.class;
+
+          btn.onclick = async () => {
+            const service = services.find(s => s.id === info.id);
+            if (service) {
+              try {
+                const res = await fetch(service.serviceEndpoint);
+                if (!res.ok) throw new Error("Servicio no disponible");
+                const data = await res.json();
+                document.getElementById("did").innerHTML =
+                  "<h2>" + label + "</h2><pre>" +
+                  JSON.stringify(data, null, 2) + "</pre>";
+              } catch (e) {
+                document.getElementById("did").innerHTML =
+                  "<h2>" + label + "</h2><p>El servicio está iniciando o no responde. Intenta de nuevo en unos segundos.</p>";
+              }
+            } else {
+              document.getElementById("did").innerHTML =
+                "<p>Servicio no encontrado en DID</p>";
+            }
+          };
+
+          menu.appendChild(btn);
+        }
+
+        document.body.insertBefore(menu, document.getElementById("did"));
+      } catch (e) {
+        document.getElementById("did").innerHTML =
+          "<p>Error cargando did.json</p>";
       }
-
-      document.body.insertBefore(menu, document.getElementById("did"));
-    } catch (e) {
-      document.getElementById("did").innerHTML =
-        "<p>Error cargando did.json</p>";
     }
-  }
 
-  // Ejecutar solo DID y Backend (sin config.json)
-  loadDID();
-
-  async function loadBackend() {
-    try {
-      const res = await fetch("https://cerebro-nexo-bankend.onrender.com/");
-      if (!res.ok) throw new Error("Backend no disponible");
-      const data = await res.json();
-      document.getElementById("backend").innerHTML =
-        "<h2>Backend:</h2><pre>" + JSON.stringify(data, null, 2) + "</pre>";
-    } catch (e) {
-      document.getElementById("backend").innerHTML =
-        "<p>El backend está iniciando o no responde. Intenta de nuevo en unos segundos.</p>";
+    async function loadBackend() {
+      try {
+        const res = await fetch("https://cerebro-nexo-bankend.onrender.com/");
+        if (!res.ok) throw new Error("Backend no disponible");
+        const data = await res.json();
+        document.getElementById("backend").innerHTML =
+          "<h2>Backend:</h2><pre>" + JSON.stringify(data, null, 2) + "</pre>";
+      } catch (e) {
+        document.getElementById("backend").innerHTML =
+          "<p>El backend está iniciando o no responde. Intenta de nuevo en unos segundos.</p>";
+      }
     }
-  }
 
-  loadBackend();
-</script>
+    // Ejecutar funciones al cargar la página
+    loadDID();
+    loadBackend();
+  </script>
+
+</body>
+</html>
